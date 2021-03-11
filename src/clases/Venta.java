@@ -7,15 +7,23 @@ public class Venta {
     private int idVaca;
     private float kilos;
     private int precioPorKilo;
-
+    private int idFactura;
     public Venta() {
     }
 
-    public Venta(int idVenta, int idVaca, float kilos, int precioPorKilo) {
+    public Venta(int idVenta, int idVaca, float kilos, int precioPorKilo, int idFactura) {
         this.idVenta = idVenta;
         this.idVaca = idVaca;
         this.kilos = kilos;
         this.precioPorKilo = precioPorKilo;
+        this.idFactura = idFactura;
+    }
+
+    public Venta(int idVaca, float kilos, int precioPorKilo, int idFactura) {
+        this.idVaca = idVaca;
+        this.kilos = kilos;
+        this.precioPorKilo = precioPorKilo;
+        this.idFactura = idFactura;
     }
 
     public Venta(int idVaca, float kilos, int precioPorKilo) {
@@ -56,10 +64,20 @@ public class Venta {
         this.precioPorKilo = precioPorKilo;
     }
 
+    public int getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(int idFactura) {
+        this.idFactura = idFactura;
+    }
+
     @Override
     public String toString() {
-        return "Venta{" + "idVenta=" + idVenta + ", idVaca=" + idVaca + ", kilos=" + kilos + ", precioPorKilo=" + precioPorKilo + '}';
+        return "Venta{" + "idVenta=" + idVenta + ", idVaca=" + idVaca + ", kilos=" + kilos + ", precioPorKilo=" + precioPorKilo + ", idFactura=" + idFactura + '}';
     }
+
+    
     
     
 }

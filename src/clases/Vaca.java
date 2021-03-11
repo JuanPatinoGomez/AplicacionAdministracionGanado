@@ -8,7 +8,8 @@ public class Vaca {
     private int idvaca;
     private int numero;
     private LocalDate fechaNacimiento;
-    private boolean estado;
+    private String estado;
+    private boolean vendido;
     private char genero;
     private float kilos;
     private String tipoVaca;
@@ -17,30 +18,33 @@ public class Vaca {
     public Vaca() {
     }
 
-    public Vaca(int idvaca, int numero, LocalDate fechaNacimiento, boolean estado, char genero, float kilos, String tipoVaca, String cedula) {
+    public Vaca(int numero, String estado, boolean vendido, char genero, float kilos, String tipoVaca, String cedula) {
+        this.numero = numero;
+        this.estado = estado;
+        this.vendido = vendido;
+        this.genero = genero;
+        this.kilos = kilos;
+        this.tipoVaca = tipoVaca;
+        this.cedula = cedula;
+    }
+
+    public Vaca(int numero, LocalDate fechaNacimiento, String estado, boolean vendido, char genero, float kilos, String tipoVaca, String cedula) {
+        this.numero = numero;
+        this.fechaNacimiento = fechaNacimiento;
+        this.estado = estado;
+        this.vendido = vendido;
+        this.genero = genero;
+        this.kilos = kilos;
+        this.tipoVaca = tipoVaca;
+        this.cedula = cedula;
+    }
+
+    public Vaca(int idvaca, int numero, LocalDate fechaNacimiento, String estado, boolean vendido, char genero, float kilos, String tipoVaca, String cedula) {
         this.idvaca = idvaca;
         this.numero = numero;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
-        this.genero = genero;
-        this.kilos = kilos;
-        this.tipoVaca = tipoVaca;
-        this.cedula = cedula;
-    }
-
-    public Vaca(int numero, LocalDate fechaNacimiento, boolean estado, char genero, float kilos, String tipoVaca, String cedula) {
-        this.numero = numero;
-        this.fechaNacimiento = fechaNacimiento;
-        this.estado = estado;
-        this.genero = genero;
-        this.kilos = kilos;
-        this.tipoVaca = tipoVaca;
-        this.cedula = cedula;
-    }
-
-    public Vaca(int numero, boolean estado, char genero, float kilos, String tipoVaca, String cedula) {
-        this.numero = numero;
-        this.estado = estado;
+        this.vendido = vendido;
         this.genero = genero;
         this.kilos = kilos;
         this.tipoVaca = tipoVaca;
@@ -71,12 +75,20 @@ public class Vaca {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public boolean isEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public boolean isVendido() {
+        return vendido;
+    }
+
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
     }
 
     public char getGenero() {
@@ -110,12 +122,6 @@ public class Vaca {
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
-
-    @Override
-    public String toString() {
-        return "Vaca{" + "idvaca=" + idvaca + ", numero=" + numero + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", genero=" + genero + ", kilos=" + kilos + ", tipoVaca=" + tipoVaca + ", cedula=" + cedula + '}';
-    }
-    
     
     
 }
