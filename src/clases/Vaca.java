@@ -122,6 +122,11 @@ public class Vaca {
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
+
+    @Override
+    public String toString() {
+        return "Vaca{" + "idvaca=" + idvaca + ", numero=" + numero + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", vendido=" + vendido + ", genero=" + genero + ", kilos=" + kilos + ", tipoVaca=" + tipoVaca + ", cedula=" + cedula + '}';
+    }
     
     
 }

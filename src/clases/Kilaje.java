@@ -8,6 +8,10 @@ public class Kilaje {
     private int ano;
     private String tipoDeVaca;
 
+    public Kilaje() {
+    }
+
+    
     public Kilaje(int idKilaje, String cedula, int kilos, int ano, String tipoDeVaca) {
         this.idKilaje = idKilaje;
         this.cedula = cedula;

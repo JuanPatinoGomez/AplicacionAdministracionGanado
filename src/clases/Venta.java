@@ -8,6 +8,7 @@ public class Venta {
     private float kilos;
     private int precioPorKilo;
     private int idFactura;
+    
     public Venta() {
     }
 

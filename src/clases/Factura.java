@@ -17,9 +17,12 @@ public class Factura {
         this.valorTotal = valorTotal;
     }
 
-    public Factura(int kilosTotal) {
+    public Factura(int kilosTotal, int valorTotal) {
         this.kilosTotal = kilosTotal;
+        this.valorTotal = valorTotal;
     }
+
+    
 
     public int getIdFactura() {
         return idFactura;
