@@ -164,4 +164,38 @@ public class VacaDB extends Conexion implements CRUD{
         return objVaca;
     }
     
+    //metodos fuera del crud
+    public List<Object> listarVacasPorPropietario(Object obj) {
+        List<Object> rowsQuery = new ArrayList();
+        Vaca objVaca = (Vaca) obj;
+        Connection conex = abrirConexion();
+        
+        try {
+            String sql = "SELECT * FROM vaca WHERE cedula = ?";
+            PreparedStatement preparedStatement = (PreparedStatement) conex.prepareStatement(sql);
+            preparedStatement.setString(1, objVaca.getCedula());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            while (resultSet.next()) {
+                objVaca = new Vaca();
+                objVaca.setIdvaca(resultSet.getInt("idvaca"));
+                objVaca.setNumero(resultSet.getInt("numero"));
+                objVaca.setFechaNacimiento(resultSet.getDate("fecha_nacimiento").toLocalDate());
+                objVaca.setEstado(resultSet.getString("estado"));
+                objVaca.setVendido(resultSet.getBoolean("vendido"));
+                objVaca.setGenero(resultSet.getString("vendido").charAt(0));
+                objVaca.setKilos(resultSet.getFloat("kilos"));
+                objVaca.setTipoVaca(resultSet.getString("tipodevaca"));
+                objVaca.setCedula(resultSet.getString("cedula"));
+                rowsQuery.add(objVaca);
+            }
+            preparedStatement.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        cerrarConexion();
+        return rowsQuery;
+    }
 }

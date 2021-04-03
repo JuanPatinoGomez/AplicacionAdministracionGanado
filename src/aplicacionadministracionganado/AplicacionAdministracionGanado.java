@@ -7,6 +7,7 @@ import clases.Propietario;
 import clases.Vaca;
 import clases.Venta;
 import database.Conexion;
+import formularios.FrmPrincipal;
 import java.time.LocalDate;
 import java.time.Month;
 import modelo.FacturaDB;
@@ -19,6 +20,8 @@ import modelo.VentaDB;
 public class AplicacionAdministracionGanado {
 
     public static void main(String[] args) {
+        FrmPrincipal frmPrincipal = new FrmPrincipal();
+        frmPrincipal.setVisible(true);
 //        Conexion cone = new Conexion();
 //        cone.abrirConexion();
 //        cone.cerrarConexion();

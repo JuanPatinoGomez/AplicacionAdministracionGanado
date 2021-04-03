@@ -125,9 +125,14 @@ public class PropietarioDB extends Conexion implements CRUD{
             String sql = "SELECT * FROM propietario WHERE cedula = ?";
             PreparedStatement preparedStatement =  (PreparedStatement) conex.prepareStatement(sql);
             preparedStatement.setString(1, objPropietario.getCedula());
+            
+            objPropietario = new Propietario();//esta línea es para que no devulva la cedula cuando no se encontro nada
+            //al no encontrar nada no devulve la cedula con la que llega sino devulve todos los valores como null
+            
             ResultSet resultSet = preparedStatement.executeQuery();
             
             while (resultSet.next()) {
+                
                 objPropietario.setCedula(resultSet.getString("cedula"));
                 objPropietario.setNombres(resultSet.getString("nombres"));
                 objPropietario.setApellidos(resultSet.getString("apellidos"));
@@ -141,7 +146,7 @@ public class PropietarioDB extends Conexion implements CRUD{
         }
         
         cerrarConexion();
-        
+        System.out.println("consulta" + objPropietario);
         return objPropietario;
     }
     
