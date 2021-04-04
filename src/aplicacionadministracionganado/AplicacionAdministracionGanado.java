@@ -27,7 +27,7 @@ public class AplicacionAdministracionGanado {
 //        cone.cerrarConexion();
 
         //Propietario
-        //insertar
+    //insertar
         
 //        Propietario objPro = new Propietario("102548264", "nombreeee", "Parra", 20);
 //        PropietarioDB objProDB = new PropietarioDB();
@@ -60,7 +60,7 @@ public class AplicacionAdministracionGanado {
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
         //insertar
-//        Vaca objVaca = new Vaca(112, LocalDate.of(2021, Month.MARCH, 05), "sana", true, 'h', 220, "vacota", "10256546458");
+//        Vaca objVaca = new Vaca(112, LocalDate.of(2021, Month.MARCH, 05), "sana", false, 'h', 220, "vacota", "10256546458");
 //        VacaDB objVacaDB = new VacaDB(); 
 //        objVacaDB.insertar(objVaca);
 

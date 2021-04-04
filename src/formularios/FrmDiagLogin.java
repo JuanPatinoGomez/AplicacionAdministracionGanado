@@ -63,6 +63,7 @@ public class FrmDiagLogin extends javax.swing.JDialog {
         lblIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user_azul_verdoso.png"))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Cédula:");
 
         txtCedula.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

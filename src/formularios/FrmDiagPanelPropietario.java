@@ -14,30 +14,56 @@ import modelo.VacaDB;
  */
 public class FrmDiagPanelPropietario extends javax.swing.JDialog {
 
-    /**
-     * Creates new form FrmDiagGeneral
-     */
+    private int contVacasTotal;
+    private int contVacasSanas;
+    private int contVacasEnfermas;
+    
     public FrmDiagPanelPropietario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        FrmPrincipal.listadoDeVacas.clear(); //Se hace esto para que cada vez que entre no mantenga los datos que tenia antes
+        
+        this.contVacasTotal = 0;
+        this.contVacasSanas = 0;
+        this.contVacasEnfermas = 0;
+        
         this.setLocationRelativeTo(null);
         this.lblNombrePropietario.setText(FrmPrincipal.propietarioPrincipal.getNombres());
         
-        informacionConteDeVacas();
+        informacionConteoDeVacas();
+        cargarInfoEnlbl();
+        
     }
-    private void informacionConteDeVacas() {
+    private void informacionConteoDeVacas() {
+        
+        
         Vaca objVaca = new Vaca();
         objVaca.setCedula(FrmPrincipal.propietarioPrincipal.getCedula());
         VacaDB objVacaDB = new VacaDB();
         
+        //Se almacenan las vacas de la base de datos en un ArrayList
         for(Object obj : objVacaDB.listarVacasPorPropietario(objVaca)){
             FrmPrincipal.listadoDeVacas.add((Vaca) obj);
         }
+        
+        //Se hace el conteo
         for (int i = 0; i < FrmPrincipal.listadoDeVacas.size(); i++) {
-            System.out.println(FrmPrincipal.listadoDeVacas.get(i));
+            
+            if (FrmPrincipal.listadoDeVacas.get(i).getEstado().equals("sana")) {
+                this.contVacasSanas++;
+            }else if(FrmPrincipal.listadoDeVacas.get(i).getEstado().equals("enferma")){
+                this.contVacasEnfermas++;
+            }
+            
         }
-        
-        
+        this.contVacasTotal = this.contVacasSanas + this.contVacasEnfermas;
+    }
+    
+    private void cargarInfoEnlbl(){
+        this.lblVacasTotal.setText(Integer.toString(this.contVacasTotal));
+        this.lblVacasSanas.setText(Integer.toString(this.contVacasSanas));
+        this.lblVacasEnfermas.setText(Integer.toString(this.contVacasEnfermas));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +89,9 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
         lblVacasTotal = new javax.swing.JLabel();
         lblVacasSanas = new javax.swing.JLabel();
         lblVacasEnfermas = new javax.swing.JLabel();
+        btnVacasTotal = new javax.swing.JButton();
+        btnVacasEnfermas = new javax.swing.JButton();
+        btnVacasSanas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -76,7 +105,7 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
         btnVerFacturas.setText("Ver facturas");
 
         btnKilaje.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnKilaje.setText("Kilaje");
+        btnKilaje.setText("Ver kilaje");
 
         btnAnadirVaca.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnAnadirVaca.setText("Añadir vaca");
@@ -120,24 +149,51 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Panel de información Propietario");
 
-        lblNombrePropietario.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblNombrePropietario.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
         lblNombrePropietario.setForeground(new java.awt.Color(0, 204, 204));
         lblNombrePropietario.setText(".");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("Numero de vacas en total: ");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Numero de vacas sanas: ");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setText("Numero de vacas enfermas: ");
 
-        lblVacasTotal.setText("jLabel2");
+        lblVacasTotal.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblVacasTotal.setText(".");
 
-        lblVacasSanas.setText("jLabel2");
+        lblVacasSanas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblVacasSanas.setText(".");
 
-        lblVacasEnfermas.setText("jLabel2");
+        lblVacasEnfermas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblVacasEnfermas.setText(".");
+
+        btnVacasTotal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesBotones/ver.png"))); // NOI18N
+        btnVacasTotal.setText("Ver");
+        btnVacasTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVacasTotalActionPerformed(evt);
+            }
+        });
+
+        btnVacasEnfermas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesBotones/ver.png"))); // NOI18N
+        btnVacasEnfermas.setText("Ver");
+        btnVacasEnfermas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVacasEnfermasActionPerformed(evt);
+            }
+        });
+
+        btnVacasSanas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesBotones/ver.png"))); // NOI18N
+        btnVacasSanas.setText("Ver");
+        btnVacasSanas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVacasSanasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -153,15 +209,25 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
                             .addComponent(lblNombrePropietario)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(43, 43, 43)
+                                .addComponent(lblVacasEnfermas, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(62, 62, 62)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblVacasSanas, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                                    .addComponent(lblVacasTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(31, 31, 31)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblVacasEnfermas)
-                            .addComponent(lblVacasSanas)
-                            .addComponent(lblVacasTotal))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnVacasSanas)
+                                .addComponent(btnVacasTotal))
+                            .addComponent(btnVacasEnfermas, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(0, 34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -172,18 +238,22 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(lblNombrePropietario)
-                .addGap(69, 69, 69)
+                .addGap(70, 70, 70)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(lblVacasTotal))
+                    .addComponent(lblVacasTotal)
+                    .addComponent(btnVacasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(lblVacasSanas))
+                    .addComponent(lblVacasSanas)
+                    .addComponent(btnVacasSanas, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(lblVacasEnfermas))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblVacasEnfermas)
+                        .addComponent(btnVacasEnfermas, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -200,6 +270,21 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVacasTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacasTotalActionPerformed
+        FrmDialogTablaVacas frmDialogTablaVacas = new FrmDialogTablaVacas(null, true, 1);
+        frmDialogTablaVacas.setVisible(true);
+    }//GEN-LAST:event_btnVacasTotalActionPerformed
+
+    private void btnVacasSanasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacasSanasActionPerformed
+        FrmDialogTablaVacas frmDialogTablaVacas = new FrmDialogTablaVacas(null, true, 2);
+        frmDialogTablaVacas.setVisible(true);
+    }//GEN-LAST:event_btnVacasSanasActionPerformed
+
+    private void btnVacasEnfermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacasEnfermasActionPerformed
+        FrmDialogTablaVacas frmDialogTablaVacas = new FrmDialogTablaVacas(null, true, 3);
+        frmDialogTablaVacas.setVisible(true);
+    }//GEN-LAST:event_btnVacasEnfermasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,6 +332,9 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadirVaca;
     private javax.swing.JButton btnKilaje;
+    private javax.swing.JButton btnVacasEnfermas;
+    private javax.swing.JButton btnVacasSanas;
+    private javax.swing.JButton btnVacasTotal;
     private javax.swing.JButton btnVender;
     private javax.swing.JButton btnVerFacturas;
     private javax.swing.JLabel jLabel1;
