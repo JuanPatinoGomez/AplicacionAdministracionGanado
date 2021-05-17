@@ -1,26 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package formularios;
 
 import clases.Vaca;
+import java.time.LocalDate;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author PERSONAL
- */
 public class FrmDialogTablaVacas extends javax.swing.JDialog {
 
+    int opcion = 0;
     DefaultTableModel tableModel;
+
     public FrmDialogTablaVacas(java.awt.Frame parent, boolean modal, int opcion) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
+        this.opcion = opcion;
+
         configuracionTabla();
         llenarTabla(opcion);
         System.out.println(opcion);
@@ -127,6 +123,11 @@ public class FrmDialogTablaVacas extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDatosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDatos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -167,6 +168,96 @@ public class FrmDialogTablaVacas extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMouseClicked
+        int col = this.tblDatos.getSelectedColumn();
+        if (col == 6) {
+            int fila = this.tblDatos.getSelectedRow();
+
+//            int numeroVaca = Integer.parseInt(this.tblDatos.getValueAt(fila, 0).toString());
+//            LocalDate fechaNacVca = LocalDate.parse(this.tblDatos.getValueAt(fila, 1).toString());
+
+//            System.out.println("Has seleccionado ver en la fila: " + fila);
+
+            /*
+                Como en la tabla no se muestra el idVaca para saber que vaca exactamente fue la que se selecciono
+                lo que hacemos es tomar la fila y dependiendo de que tipo de vacas este viendo(todas, sana, enfermas)
+                se buscara en el ArrayList por medio de la fila y la opcion que eligio del tipo de vaca
+            
+                osea lo que hace es por ejemplo seleccionamos la fila 0, si la opcion es 1 pues tomamos el dato en la pos
+                0 del ArrayList, dependiendo de la opción se buscara se una manera diferente en la siguiente función
+             */
+//            System.out.println("El número de la vaca en la tabla es " + numeroVaca
+//                    + " \nla fecha de nacimiento es " + fechaNacVca);
+            Vaca objVaca = buscarVacaTabla(fila);
+
+//            System.out.println("El número de la vaca traida por el metodo es:" + objVaca.getNumero()
+//                    + " \nla fecha de nacimiento es " + objVaca.getFechaNacimiento());
+            FrmDiagInformacionVaca frmDiagInformacionVaca = new FrmDiagInformacionVaca(null, true, objVaca);
+            frmDiagInformacionVaca.setVisible(true);
+            llenarTabla(this.opcion); // Se vuelve a cargar el panel por si se ha actualizado algo
+
+        }
+    }//GEN-LAST:event_tblDatosMouseClicked
+
+    private Vaca buscarVacaTabla(int fila) {
+
+//        System.out.println("la opcion al entrar al metodo es " + this.opcion + " y la fila es " + fila);
+        Vaca objVaca = null;
+        boolean encontrada = false;
+        int iterador = 0;
+        switch (this.opcion) {
+
+            case 1:
+
+                //Al ser todos devuelve el dato en la pos fila ya que se agregaron en la tabla en el orden del ArrayList
+                objVaca = FrmPrincipal.listadoDeVacas.get(fila);
+                break;
+            case 2:
+
+                //se hace un conteo ya que estos fueron ingresados dependiendo una condicion
+                //por ejemplo la fila 3 seria el 3 dato que cumplia la condicion de sana
+                int cont = 0;
+                while (encontrada != true) {
+
+                    if (FrmPrincipal.listadoDeVacas.get(iterador).getEstado().equals("Sana")) {
+                        if (cont == fila) {
+                            encontrada = true;
+                            objVaca = FrmPrincipal.listadoDeVacas.get(iterador);
+                        } else {
+                            cont++;
+                        }
+                    }
+                    iterador++;
+
+                }
+                break;
+            case 3:
+
+                //lo mismo que la opcion 2
+                int cont3 = 0;
+                while (encontrada != true) {
+
+                    if (FrmPrincipal.listadoDeVacas.get(iterador).getEstado().equals("Enferma")) {
+                        if (cont3 == fila) {
+                            encontrada = true;
+                            objVaca = FrmPrincipal.listadoDeVacas.get(iterador);
+                        } else {
+                            cont3++;
+                        }
+                    }
+                    iterador++;
+
+                }
+
+                break;
+            default:
+                System.out.println("Entro al default");
+                throw new AssertionError();
+        }
+
+        return objVaca;
+    }
 
     /**
      * @param args the command line arguments
@@ -215,7 +306,6 @@ public class FrmDialogTablaVacas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIconTabla;
@@ -223,51 +313,76 @@ public class FrmDialogTablaVacas extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void configuracionTabla() {
-        String encabezado [] = {"Número", "Fecha nacimiento", "Genero", "Kilos", "Tipo de vaca"};
+        String encabezado[] = {"Número", "Fecha nacimiento", "Genero", "Kilos", "Tipo de vaca", "Potrero", "Opción"};
         String datos[][] = {};
-        
+
         this.tableModel = new DefaultTableModel(datos, encabezado);
         this.tblDatos.setModel(tableModel);
-        
+
     }
 
     private void llenarTabla(int opcion) {
         this.tableModel.setNumRows(0); //Para que se reinicie la tabla
-        
-        String fila [] = new String[5];
-        
+
+        String fila[] = new String[7];
+
         switch (opcion) {
             case 1:
-                
-                for(Vaca objVaca : FrmPrincipal.listadoDeVacas){
+
+                for (Vaca objVaca : FrmPrincipal.listadoDeVacas) {
                     fila[0] = Integer.toString(objVaca.getNumero());
-                    fila[1] = objVaca.getFechaNacimiento().toString();
-                    fila[2] = Character.toString(objVaca.getGenero());
+                    //modificación
+                    if (objVaca.getFechaNacimiento() == null) {
+                        fila[1] = "";
+                    } else {
+                        fila[1] = objVaca.getFechaNacimiento().toString();
+                    }
+
+                    fila[2] = objVaca.getGenero();
                     fila[3] = Float.toString(objVaca.getKilos());
                     fila[4] = objVaca.getTipoVaca();
+                    fila[5] = objVaca.getPotrero();
+                    fila[6] = "Ver";
                     this.tableModel.addRow(fila);
+
                 }
                 break;
             case 2:
-                for(Vaca objVaca : FrmPrincipal.listadoDeVacas){
-                    if (objVaca.getEstado().equals("sana")) {
+                for (Vaca objVaca : FrmPrincipal.listadoDeVacas) {
+                    if (objVaca.getEstado().equals("Sana")) {
                         fila[0] = Integer.toString(objVaca.getNumero());
-                        fila[1] = objVaca.getFechaNacimiento().toString();
-                        fila[2] = Character.toString(objVaca.getGenero());
+                        //modificación
+                        if (objVaca.getFechaNacimiento() == null) {
+                            fila[1] = "";
+                        } else {
+                            fila[1] = objVaca.getFechaNacimiento().toString();
+                        }
+
+                        fila[2] = objVaca.getGenero();
                         fila[3] = Float.toString(objVaca.getKilos());
                         fila[4] = objVaca.getTipoVaca();
+                        fila[5] = objVaca.getPotrero();
+                        fila[6] = "Ver";
                         this.tableModel.addRow(fila);
                     }
                 }
                 break;
             case 3:
-                for(Vaca objVaca : FrmPrincipal.listadoDeVacas){
-                    if (objVaca.getEstado().equals("enferma")) {
+                for (Vaca objVaca : FrmPrincipal.listadoDeVacas) {
+                    if (objVaca.getEstado().equals("Enferma")) {
                         fila[0] = Integer.toString(objVaca.getNumero());
-                        fila[1] = objVaca.getFechaNacimiento().toString();
-                        fila[2] = Character.toString(objVaca.getGenero());
+                        //modificación
+                        if (objVaca.getFechaNacimiento() == null) {
+                            fila[1] = "";
+                        } else {
+                            fila[1] = objVaca.getFechaNacimiento().toString();
+                        }
+
+                        fila[2] = objVaca.getGenero();
                         fila[3] = Float.toString(objVaca.getKilos());
                         fila[4] = objVaca.getTipoVaca();
+                        fila[5] = objVaca.getPotrero();
+                        fila[6] = "Ver";
                         this.tableModel.addRow(fila);
                     }
                 }
@@ -275,6 +390,6 @@ public class FrmDialogTablaVacas extends javax.swing.JDialog {
             default:
                 throw new AssertionError();
         }
-        
+
     }
 }

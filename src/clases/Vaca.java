@@ -10,36 +10,17 @@ public class Vaca {
     private LocalDate fechaNacimiento;
     private String estado;
     private boolean vendido;
-    private char genero;
+    private String genero;
     private float kilos;
     private String tipoVaca;
+    private String potrero;
+    private String descripcion;
     private String cedula;
 
     public Vaca() {
     }
-
-    public Vaca(int numero, String estado, boolean vendido, char genero, float kilos, String tipoVaca, String cedula) {
-        this.numero = numero;
-        this.estado = estado;
-        this.vendido = vendido;
-        this.genero = genero;
-        this.kilos = kilos;
-        this.tipoVaca = tipoVaca;
-        this.cedula = cedula;
-    }
-
-    public Vaca(int numero, LocalDate fechaNacimiento, String estado, boolean vendido, char genero, float kilos, String tipoVaca, String cedula) {
-        this.numero = numero;
-        this.fechaNacimiento = fechaNacimiento;
-        this.estado = estado;
-        this.vendido = vendido;
-        this.genero = genero;
-        this.kilos = kilos;
-        this.tipoVaca = tipoVaca;
-        this.cedula = cedula;
-    }
-
-    public Vaca(int idvaca, int numero, LocalDate fechaNacimiento, String estado, boolean vendido, char genero, float kilos, String tipoVaca, String cedula) {
+    //manejo de id
+    public Vaca(int idvaca, int numero, LocalDate fechaNacimiento, String estado, boolean vendido, String genero, float kilos, String tipoVaca, String potrero, String descripcion, String cedula) {
         this.idvaca = idvaca;
         this.numero = numero;
         this.fechaNacimiento = fechaNacimiento;
@@ -48,8 +29,37 @@ public class Vaca {
         this.genero = genero;
         this.kilos = kilos;
         this.tipoVaca = tipoVaca;
+        this.potrero = potrero;
+        this.descripcion = descripcion;
         this.cedula = cedula;
     }
+    //insertar una vaca con todos los datos
+    public Vaca(int numero, LocalDate fechaNacimiento, String estado, boolean vendido, String genero, float kilos, String tipoVaca, String potrero, String descripcion, String cedula) {
+        this.numero = numero;
+        this.fechaNacimiento = fechaNacimiento;
+        this.estado = estado;
+        this.vendido = vendido;
+        this.genero = genero;
+        this.kilos = kilos;
+        this.tipoVaca = tipoVaca;
+        this.potrero = potrero;
+        this.descripcion = descripcion;
+        this.cedula = cedula;
+    }
+    //insertar vacas a las que no se les sepa la fecha de nacimiento
+    public Vaca(int numero, String estado, boolean vendido, String genero, float kilos, String tipoVaca, String potrero, String descripcion, String cedula) {
+        this.numero = numero;
+        this.estado = estado;
+        this.vendido = vendido;
+        this.genero = genero;
+        this.kilos = kilos;
+        this.tipoVaca = tipoVaca;
+        this.potrero = potrero;
+        this.descripcion = descripcion;
+        this.cedula = cedula;
+    }
+
+    
 
     public int getIdvaca() {
         return idvaca;
@@ -91,11 +101,11 @@ public class Vaca {
         this.vendido = vendido;
     }
 
-    public char getGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(char genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
@@ -115,6 +125,22 @@ public class Vaca {
         this.tipoVaca = tipoVaca;
     }
 
+    public String getPotrero() {
+        return potrero;
+    }
+
+    public void setPotrero(String potrero) {
+        this.potrero = potrero;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public String getCedula() {
         return cedula;
     }
@@ -125,8 +151,10 @@ public class Vaca {
 
     @Override
     public String toString() {
-        return "Vaca{" + "idvaca=" + idvaca + ", numero=" + numero + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", vendido=" + vendido + ", genero=" + genero + ", kilos=" + kilos + ", tipoVaca=" + tipoVaca + ", cedula=" + cedula + '}';
+        return "Vaca{" + "idvaca=" + idvaca + ", numero=" + numero + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", vendido=" + vendido + ", genero=" + genero + ", kilos=" + kilos + ", tipoVaca=" + tipoVaca + ", potrero=" + potrero + ", descripcion=" + descripcion + ", cedula=" + cedula + '}';
     }
+
+    
     
     
 }

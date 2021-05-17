@@ -17,54 +17,60 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
     private int contVacasTotal;
     private int contVacasSanas;
     private int contVacasEnfermas;
-    
+
     public FrmDiagPanelPropietario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         FrmPrincipal.listadoDeVacas.clear(); //Se hace esto para que cada vez que entre no mantenga los datos que tenia antes
-        
+
         this.contVacasTotal = 0;
         this.contVacasSanas = 0;
         this.contVacasEnfermas = 0;
-        
+
         this.setLocationRelativeTo(null);
         this.lblNombrePropietario.setText(FrmPrincipal.propietarioPrincipal.getNombres());
-        
+
         informacionConteoDeVacas();
         cargarInfoEnlbl();
-        
+
     }
+
     private void informacionConteoDeVacas() {
-        
-        
+
+        FrmPrincipal.listadoDeVacas.clear(); // Por si hay alguna actualización se vuelven a cargar las vacas
+        this.contVacasTotal = 0;
+        this.contVacasSanas = 0;
+        this.contVacasEnfermas = 0; // Al igual que los contadores
+
         Vaca objVaca = new Vaca();
         objVaca.setCedula(FrmPrincipal.propietarioPrincipal.getCedula());
         VacaDB objVacaDB = new VacaDB();
-        
+
         //Se almacenan las vacas de la base de datos en un ArrayList
-        for(Object obj : objVacaDB.listarVacasPorPropietario(objVaca)){
+        for (Object obj : objVacaDB.listarVacasPorPropietario(objVaca)) {
             FrmPrincipal.listadoDeVacas.add((Vaca) obj);
         }
-        
+
         //Se hace el conteo
         for (int i = 0; i < FrmPrincipal.listadoDeVacas.size(); i++) {
-            
-            if (FrmPrincipal.listadoDeVacas.get(i).getEstado().equals("sana")) {
+
+            if (FrmPrincipal.listadoDeVacas.get(i).getEstado().equals("Sana")) {
                 this.contVacasSanas++;
-            }else if(FrmPrincipal.listadoDeVacas.get(i).getEstado().equals("enferma")){
+            } else if (FrmPrincipal.listadoDeVacas.get(i).getEstado().equals("Enferma")) {
                 this.contVacasEnfermas++;
             }
-            
+
         }
         this.contVacasTotal = this.contVacasSanas + this.contVacasEnfermas;
     }
-    
-    private void cargarInfoEnlbl(){
+
+    private void cargarInfoEnlbl() {
         this.lblVacasTotal.setText(Integer.toString(this.contVacasTotal));
         this.lblVacasSanas.setText(Integer.toString(this.contVacasSanas));
         this.lblVacasEnfermas.setText(Integer.toString(this.contVacasEnfermas));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,6 +98,7 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
         btnVacasTotal = new javax.swing.JButton();
         btnVacasEnfermas = new javax.swing.JButton();
         btnVacasSanas = new javax.swing.JButton();
+        imgVaca = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -109,6 +116,11 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
 
         btnAnadirVaca.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnAnadirVaca.setText("Añadir vaca");
+        btnAnadirVaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirVacaActionPerformed(evt);
+            }
+        });
 
         btnVender.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnVender.setText("Vender");
@@ -143,7 +155,7 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
                 .addComponent(btnAnadirVaca, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVender, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -195,6 +207,8 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
             }
         });
 
+        imgVaca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/vaca4.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -209,26 +223,29 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
                             .addComponent(lblNombrePropietario)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(43, 43, 43)
-                                .addComponent(lblVacasEnfermas, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(62, 62, 62)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblVacasSanas, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
-                                    .addComponent(lblVacasTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(31, 31, 31)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnVacasSanas)
-                                .addComponent(btnVacasTotal))
-                            .addComponent(btnVacasEnfermas, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(0, 34, Short.MAX_VALUE))
+                            .addComponent(imgVaca)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(43, 43, 43)
+                                        .addComponent(lblVacasEnfermas, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4))
+                                        .addGap(62, 62, 62)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(lblVacasSanas, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                                            .addComponent(lblVacasTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(31, 31, 31)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnVacasSanas)
+                                        .addComponent(btnVacasTotal))
+                                    .addComponent(btnVacasEnfermas, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                .addGap(0, 33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +271,9 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblVacasEnfermas)
                         .addComponent(btnVacasEnfermas, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(imgVaca)
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,17 +293,34 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
     private void btnVacasTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacasTotalActionPerformed
         FrmDialogTablaVacas frmDialogTablaVacas = new FrmDialogTablaVacas(null, true, 1);
         frmDialogTablaVacas.setVisible(true);
+        //Al cerrar se vuelve a cargar la info por si hay actualizaciones
+        informacionConteoDeVacas();
+        cargarInfoEnlbl();
     }//GEN-LAST:event_btnVacasTotalActionPerformed
 
     private void btnVacasSanasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacasSanasActionPerformed
         FrmDialogTablaVacas frmDialogTablaVacas = new FrmDialogTablaVacas(null, true, 2);
         frmDialogTablaVacas.setVisible(true);
+        //Al cerrar se vuelve a cargar la info por si hay actualizaciones
+        informacionConteoDeVacas();
+        cargarInfoEnlbl();
     }//GEN-LAST:event_btnVacasSanasActionPerformed
 
     private void btnVacasEnfermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacasEnfermasActionPerformed
         FrmDialogTablaVacas frmDialogTablaVacas = new FrmDialogTablaVacas(null, true, 3);
         frmDialogTablaVacas.setVisible(true);
+        //Al cerrar se vuelve a cargar la info por si hay actualizaciones
+        informacionConteoDeVacas();
+        cargarInfoEnlbl();
     }//GEN-LAST:event_btnVacasEnfermasActionPerformed
+
+    private void btnAnadirVacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirVacaActionPerformed
+        FrmDiagTipoDeIngreso frmDiagTipoDeIngreso = new FrmDiagTipoDeIngreso(null, true);
+        frmDiagTipoDeIngreso.setVisible(true);
+        //Al cerrar se vuelve a cargar la info por si hay actualizaciones
+        informacionConteoDeVacas();
+        cargarInfoEnlbl();
+    }//GEN-LAST:event_btnAnadirVacaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -337,6 +373,7 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
     private javax.swing.JButton btnVacasTotal;
     private javax.swing.JButton btnVender;
     private javax.swing.JButton btnVerFacturas;
+    private javax.swing.JLabel imgVaca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -350,5 +387,4 @@ public class FrmDiagPanelPropietario extends javax.swing.JDialog {
     private javax.swing.JLabel lblVacasTotal;
     // End of variables declaration//GEN-END:variables
 
-    
 }

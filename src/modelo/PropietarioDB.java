@@ -146,7 +146,7 @@ public class PropietarioDB extends Conexion implements CRUD{
         }
         
         cerrarConexion();
-        System.out.println("consulta" + objPropietario);
+//        System.out.println("consulta" + objPropietario);
         return objPropietario;
     }
     

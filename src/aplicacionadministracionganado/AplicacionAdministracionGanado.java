@@ -22,9 +22,9 @@ public class AplicacionAdministracionGanado {
     public static void main(String[] args) {
         FrmPrincipal frmPrincipal = new FrmPrincipal();
         frmPrincipal.setVisible(true);
-//        Conexion cone = new Conexion();
-//        cone.abrirConexion();
-//        cone.cerrarConexion();
+        Conexion cone = new Conexion();
+        cone.abrirConexion();
+        cone.cerrarConexion();
 
         //Propietario
     //insertar
@@ -60,18 +60,18 @@ public class AplicacionAdministracionGanado {
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
         //insertar
-//        Vaca objVaca = new Vaca(112, LocalDate.of(2021, Month.MARCH, 05), "sana", false, 'h', 220, "vacota", "10256546458");
+//        Vaca objVaca = new Vaca(200, LocalDate.of(2021, Month.MARCH, 05), "sana", false, 'h', 220, "vacota", "El trillo", "Es la vaca iluminati",  "10256546458");
 //        VacaDB objVacaDB = new VacaDB(); 
 //        objVacaDB.insertar(objVaca);
 
         //actualizar
-//        Vaca objVaca = new Vaca(1 ,111, LocalDate.now(), "sanacolitaderana", true, 'h', 500, "vacocota", "10256546458");
+//        Vaca objVaca = new Vaca(25 ,111, LocalDate.now(), "sanabanana", true, 'h', 700, "vacocota","De cría","la vaca que no existe", "10256546458");
 //        VacaDB objVacaDB = new VacaDB(); 
 //        objVacaDB.actualizar(objVaca);
 
         //eliminar 
 //        Vaca objVaca = new Vaca();
-//        objVaca.setIdvaca(1);
+//        objVaca.setIdvaca(25);
 //        VacaDB objVacaDB = new VacaDB();
 //        objVacaDB.eliminar(objVaca);
 
@@ -86,7 +86,7 @@ public class AplicacionAdministracionGanado {
         //listar uno
 //        VacaDB objVacaDB = new VacaDB();
 //        Vaca objVaca = new Vaca();
-//        objVaca.setIdvaca(3);
+//        objVaca.setIdvaca(1);
 //        System.out.println(objVacaDB.listarUno(objVaca));
 
         //-----------------------------------------------------------------------------------------------------------------------
