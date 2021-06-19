@@ -22,7 +22,7 @@ public class VacaDB extends Conexion implements CRUD {
         Connection conex = abrirConexion();
 
         try {
-            String sql = "INSERT INTO vaca(numero, fecha_nacimiento, estado, vendido, genero, kilos, tipodevaca, potrero, descripcion, cedula) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO vaca(numero, fecha_nacimiento, estado, vendido, genero, kilos, tipodevaca, potrero, descripcion, cedula, idvacamadre) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = (PreparedStatement) conex.prepareStatement(sql);
             preparedStatement.setInt(1, objVaca.getNumero());
             preparedStatement.setDate(2, Date.valueOf(objVaca.getFechaNacimiento()));
@@ -34,6 +34,7 @@ public class VacaDB extends Conexion implements CRUD {
             preparedStatement.setString(8, objVaca.getPotrero());
             preparedStatement.setString(9, objVaca.getDescripcion());
             preparedStatement.setString(10, objVaca.getCedula());
+            preparedStatement.setInt(11, objVaca.getIdVacaMadre());
             preparedStatement.execute();
             preparedStatement.close();
             JOptionPane.showMessageDialog(null, "Vaca insertada de manera correcta");
@@ -53,7 +54,7 @@ public class VacaDB extends Conexion implements CRUD {
         Connection conex = abrirConexion();
 
         try {
-            String sql = "UPDATE vaca set numero = ?, fecha_nacimiento = ?, estado = ?, vendido = ?, genero = ?, kilos = ?, tipodevaca = ?, potrero = ?, descripcion = ?, cedula = ?"
+            String sql = "UPDATE vaca set numero = ?, fecha_nacimiento = ?, estado = ?, vendido = ?, genero = ?, kilos = ?, tipodevaca = ?, potrero = ?, descripcion = ?, cedula = ?, idvacamadre = ?"
                     + "WHERE idvaca = ?";
             PreparedStatement preparedStatement = (PreparedStatement) conex.prepareStatement(sql);
             preparedStatement.setInt(1, objVaca.getNumero());
@@ -74,7 +75,8 @@ public class VacaDB extends Conexion implements CRUD {
             preparedStatement.setString(8, objVaca.getPotrero());
             preparedStatement.setString(9, objVaca.getDescripcion());
             preparedStatement.setString(10, objVaca.getCedula());
-            preparedStatement.setInt(11, objVaca.getIdvaca());
+            preparedStatement.setInt(11, objVaca.getIdVacaMadre());
+            preparedStatement.setInt(12, objVaca.getIdvaca());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             JOptionPane.showMessageDialog(null, "Vaca actualizada de manera correcta");
@@ -129,6 +131,7 @@ public class VacaDB extends Conexion implements CRUD {
                 objVaca.setPotrero(resultSet.getString("potrero"));
                 objVaca.setDescripcion(resultSet.getString("descripcion"));
                 objVaca.setCedula(resultSet.getString("cedula"));
+                objVaca.setIdVacaMadre(resultSet.getInt("idvacamadre"));
                 rowsQuery.add(objVaca);
             }
             preparedStatement.close();
@@ -165,6 +168,7 @@ public class VacaDB extends Conexion implements CRUD {
                 objVaca.setPotrero(resultSet.getString("potrero"));
                 objVaca.setDescripcion(resultSet.getString("descripcion"));
                 objVaca.setCedula(resultSet.getString("cedula"));
+                objVaca.setIdVacaMadre(resultSet.getInt("idvacamadre"));
 
             }
             preparedStatement.close();
@@ -210,6 +214,7 @@ public class VacaDB extends Conexion implements CRUD {
                 objVaca.setPotrero(resultSet.getString("potrero"));
                 objVaca.setDescripcion(resultSet.getString("descripcion"));
                 objVaca.setCedula(resultSet.getString("cedula"));
+                objVaca.setIdVacaMadre(resultSet.getInt("idvacamadre"));
                 rowsQuery.add(objVaca);
             }
             preparedStatement.close();

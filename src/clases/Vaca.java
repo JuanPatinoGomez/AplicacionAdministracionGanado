@@ -16,6 +16,7 @@ public class Vaca {
     private String potrero;
     private String descripcion;
     private String cedula;
+    private int idVacaMadre;
 
     public Vaca() {
     }
@@ -34,7 +35,8 @@ public class Vaca {
         this.cedula = cedula;
     }
     //insertar una vaca con todos los datos
-    public Vaca(int numero, LocalDate fechaNacimiento, String estado, boolean vendido, String genero, float kilos, String tipoVaca, String potrero, String descripcion, String cedula) {
+    public Vaca(int idvaca, int numero, LocalDate fechaNacimiento, String estado, boolean vendido, String genero, float kilos, String tipoVaca, String potrero, String descripcion, String cedula, int idVacaMadre) {
+        this.idvaca = idvaca;
         this.numero = numero;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
@@ -45,7 +47,9 @@ public class Vaca {
         this.potrero = potrero;
         this.descripcion = descripcion;
         this.cedula = cedula;
+        this.idVacaMadre = idVacaMadre;
     }
+    
     //insertar vacas a las que no se les sepa la fecha de nacimiento
     public Vaca(int numero, String estado, boolean vendido, String genero, float kilos, String tipoVaca, String potrero, String descripcion, String cedula) {
         this.numero = numero;
@@ -149,10 +153,21 @@ public class Vaca {
         this.cedula = cedula;
     }
 
+    public int getIdVacaMadre() {
+        return idVacaMadre;
+    }
+
+    public void setIdVacaMadre(int idVacaMadre) {
+        this.idVacaMadre = idVacaMadre;
+    }
+
     @Override
     public String toString() {
-        return "Vaca{" + "idvaca=" + idvaca + ", numero=" + numero + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", vendido=" + vendido + ", genero=" + genero + ", kilos=" + kilos + ", tipoVaca=" + tipoVaca + ", potrero=" + potrero + ", descripcion=" + descripcion + ", cedula=" + cedula + '}';
+        return "Vaca{" + "idvaca=" + idvaca + ", numero=" + numero + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", vendido=" + vendido + ", genero=" + genero + ", kilos=" + kilos + ", tipoVaca=" + tipoVaca + ", potrero=" + potrero + ", descripcion=" + descripcion + ", cedula=" + cedula + ", idVacaMadre=" + idVacaMadre + '}';
     }
+
+    
+    
 
     
     

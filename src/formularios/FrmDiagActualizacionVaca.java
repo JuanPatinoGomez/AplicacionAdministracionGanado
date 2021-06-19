@@ -268,40 +268,58 @@ public class FrmDiagActualizacionVaca extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         int opcion = JOptionPane.showConfirmDialog(this, "Desea actualizar?");
         if (opcion == JOptionPane.YES_OPTION) {
+            
+            //Se valida los datos numero y propietario
+            if (!this.txtNumero.getText().isEmpty() && !this.txtPropietario.getText().isEmpty()) {
+                
+                
+                this.objVaca.setNumero(Integer.parseInt(this.txtNumero.getText()));
 
-            this.objVaca.setNumero(Integer.parseInt(this.txtNumero.getText()));
+                //Modificaciones
+                //Validación de la fecha
+                LocalDate fechaN;
+                if (this.jDCFechaNac.getDate() == null) {
+                    fechaN = null;
+                } else {
+                    fechaN = this.jDCFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    this.objVaca.setFechaNacimiento(fechaN);
+                }
 
-            //Modificaciones
-            LocalDate fechaN;
-            if (this.jDCFechaNac.getDate() == null) {
-                fechaN = null;
+                this.objVaca.setEstado(this.cmbEstado.getSelectedItem().toString());
+
+                if (this.cmbGenero.getSelectedItem().toString().equals("Hembra")) {
+                    this.objVaca.setGenero("Hembra");
+                } else {
+                    this.objVaca.setGenero("Macho");
+                }
+
+                this.objVaca.setCedula(this.txtPropietario.getText());
+
+                this.objVaca.setDescripcion(this.txtAreaDescripcion.getText());
+
+                this.objVaca.setTipoVaca(this.cmbTipoDeVaca.getSelectedItem().toString());
+
+                //Validación de kilos
+                if (!this.txtKilos.getText().isEmpty()) {
+                    System.out.println("Si habian kilos puestos");
+                    this.objVaca.setKilos(Float.parseFloat(this.txtKilos.getText()));    
+                }else{
+                    System.out.println("No habian kilos puestos");
+                    this.objVaca.setKilos(0);
+                }
+                
+
+                this.objVaca.setPotrero(this.cmbPotrero.getSelectedItem().toString());
+
+                //Actualizacion
+                VacaDB vacaDB = new VacaDB();
+                vacaDB.actualizar(this.objVaca);
+                this.dispose();
+                
             } else {
-                fechaN = this.jDCFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                this.objVaca.setFechaNacimiento(fechaN);
+                JOptionPane.showMessageDialog(this, "El número de la vaca o el número de propietario sin llenar"
+                        + "ASEGURESE DE LLENAR ESTOS CAMPOS");
             }
-
-            this.objVaca.setEstado(this.cmbEstado.getSelectedItem().toString());
-
-            if (this.cmbGenero.getSelectedItem().toString().equals("Hembra")) {
-                this.objVaca.setGenero("Hembra");
-            } else {
-                this.objVaca.setGenero("Macho");
-            }
-
-            this.objVaca.setCedula(this.txtPropietario.getText());
-
-            this.objVaca.setDescripcion(this.txtAreaDescripcion.getText());
-
-            this.objVaca.setTipoVaca(this.cmbTipoDeVaca.getSelectedItem().toString());
-
-            this.objVaca.setKilos(Float.parseFloat(this.txtKilos.getText()));
-
-            this.objVaca.setPotrero(this.cmbPotrero.getSelectedItem().toString());
-
-            //Actualizacion
-            VacaDB vacaDB = new VacaDB();
-            vacaDB.actualizar(this.objVaca);
-            this.dispose();
 
         } else {
             System.out.println("No se ha actualizado");

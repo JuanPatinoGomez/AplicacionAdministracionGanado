@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 public class FrmPrincipal extends javax.swing.JFrame {
 
-    static Propietario propietarioPrincipal = new Propietario();
-    static ArrayList<Vaca> listadoDeVacas = new ArrayList<>();
+    static Propietario propietarioPrincipal = new Propietario(); // Este es por si entramos en el panel del propietario
+    static ArrayList<Vaca> listadoDeVacas = new ArrayList<>(); //Donde se almacenan las vacas
+    //Infomación para los JComboBox
     static String[] listaDePotreros = {"El trillo", "De cría", "Toconado", "Sieva", "Ordenes"};
     static String[] listTiposDeVaca = {"Ternera", "Ternera de levante", "Novilla", "Vaca"};
     

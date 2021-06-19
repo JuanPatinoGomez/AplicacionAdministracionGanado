@@ -44,7 +44,7 @@ public class FrmDiagTipoDeIngreso extends javax.swing.JDialog {
         jPanel4.setBackground(new java.awt.Color(60, 78, 174));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("jButton1");
+        jButton1.setText("Agregar Vaca");
         jButton1.setMaximumSize(new java.awt.Dimension(141, 38));
         jButton1.setMinimumSize(new java.awt.Dimension(141, 38));
         jButton1.setPreferredSize(new java.awt.Dimension(141, 38));
@@ -55,10 +55,15 @@ public class FrmDiagTipoDeIngreso extends javax.swing.JDialog {
         });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("jButton2");
+        jButton2.setText("Agregar Familia");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton3.setText("jButton3");
+        jButton3.setText("Agregar Cría");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Tipo de ingreso");
@@ -151,6 +156,11 @@ public class FrmDiagTipoDeIngreso extends javax.swing.JDialog {
         FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true);
         frmDiagIngresoVaca.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        FrmDiagIngresoFamilia frmDiagIngresoFamilia = new FrmDiagIngresoFamilia(null, true);
+        frmDiagIngresoFamilia.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
