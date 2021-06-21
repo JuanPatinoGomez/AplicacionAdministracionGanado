@@ -25,7 +25,15 @@ public class VacaDB extends Conexion implements CRUD {
             String sql = "INSERT INTO vaca(numero, fecha_nacimiento, estado, vendido, genero, kilos, tipodevaca, potrero, descripcion, cedula, idvacamadre) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = (PreparedStatement) conex.prepareStatement(sql);
             preparedStatement.setInt(1, objVaca.getNumero());
-            preparedStatement.setDate(2, Date.valueOf(objVaca.getFechaNacimiento()));
+            
+            //Modificaciones
+            if (objVaca.getFechaNacimiento() == null) {
+                preparedStatement.setDate(2, null);
+            } else {
+                preparedStatement.setDate(2, Date.valueOf(objVaca.getFechaNacimiento()));
+
+            }
+            
             preparedStatement.setString(3, objVaca.getEstado());
             preparedStatement.setBoolean(4, objVaca.isVendido());
             preparedStatement.setString(5, objVaca.getGenero());
@@ -225,5 +233,30 @@ public class VacaDB extends Conexion implements CRUD {
 
         cerrarConexion();
         return rowsQuery;
+    }
+
+    //Metodo para traerse el ultimo id que se creo.
+    public int traerIdVacaMadre() {
+        
+        int idMadre = 0;
+        
+        Connection conex = abrirConexion();
+
+        try {
+            String sql = "SELECT idvaca FROM vaca ORDER BY idvaca DESC LIMIT 1 ";
+            PreparedStatement preparedStatement = (PreparedStatement) conex.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                idMadre = resultSet.getInt("idvaca"); //Se almacena el id
+                
+            }
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        cerrarConexion();
+        return idMadre;
     }
 }

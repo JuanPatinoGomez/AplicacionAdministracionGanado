@@ -17,14 +17,25 @@ import modelo.VacaDB;
  */
 public class FrmDiagIngresoVaca extends javax.swing.JDialog {
 
-    /**
-     * Creates new form FrmDiagIngresoVaca
-     */
+    private boolean familia; // Si es true significa que entro por medio del panel de familia
+    private boolean madreHijo; //Si es true significa que se va almacenar como madre, de lo contrario como cria
+
     public FrmDiagIngresoVaca(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
 
+        llenarCombobox();
+    }
+
+    //Constructor creado para ingresar familias -- las familias no almacenan en la base de datos de una 
+    public FrmDiagIngresoVaca(java.awt.Frame parent, boolean modal, boolean familia, boolean madreHijo) {
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+
+        this.familia = familia;
+        this.madreHijo = madreHijo;
         llenarCombobox();
     }
 
@@ -279,38 +290,77 @@ public class FrmDiagIngresoVaca extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        Vaca objVaca = new Vaca();
-        
-        objVaca.setNumero(Integer.parseInt(this.txtNumero.getText()));
-        
-        LocalDate fechaN = this.jDCFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        objVaca.setFechaNacimiento(fechaN);
-
-        objVaca.setEstado(this.cmbEstado.getSelectedItem().toString());
-
-        if (this.cmbGenero.getSelectedItem().toString().equals("Hembra")) {
-            objVaca.setGenero("Hembra");
-        } else {
-            objVaca.setGenero("Macho");
-        }
-
-        objVaca.setCedula(this.txtPropietario.getText());
-
-        objVaca.setDescripcion(this.txtAreaDescripcion.getText());
-
-        objVaca.setTipoVaca(this.cmbTipoDeVaca.getSelectedItem().toString());
-
-        objVaca.setKilos(Float.parseFloat(this.txtKilos.getText()));
-
-        objVaca.setPotrero(this.cmbPotrero.getSelectedItem().toString());
-
         int opcion = JOptionPane.showConfirmDialog(this, "Desea agregar la vaca?");
-
         if (opcion == JOptionPane.YES_OPTION) {
-            //Insertar
-            VacaDB vacaDB = new VacaDB();
-            vacaDB.insertar(objVaca);
-            this.dispose();
+
+            Vaca objVaca = new Vaca();
+
+            if (!this.txtNumero.getText().isEmpty() && !this.txtPropietario.getText().isEmpty()) {
+
+                objVaca.setNumero(Integer.parseInt(this.txtNumero.getText()));
+
+                //Validación de la fecha
+                LocalDate fechaN;
+                if (this.jDCFechaNac.getDate() == null) {
+                    fechaN = null;
+                } else {
+                    fechaN = this.jDCFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    objVaca.setFechaNacimiento(fechaN);
+                }
+
+                objVaca.setEstado(this.cmbEstado.getSelectedItem().toString());
+
+                if (this.cmbGenero.getSelectedItem().toString().equals("Hembra")) {
+                    objVaca.setGenero("Hembra");
+                } else {
+                    objVaca.setGenero("Macho");
+                }
+
+                objVaca.setCedula(this.txtPropietario.getText());
+
+                objVaca.setDescripcion(this.txtAreaDescripcion.getText());
+
+                objVaca.setTipoVaca(this.cmbTipoDeVaca.getSelectedItem().toString());
+
+                //Validación de kilos
+                if (!this.txtKilos.getText().isEmpty()) {
+                    System.out.println("Si habian kilos puestos");
+                    objVaca.setKilos(Float.parseFloat(this.txtKilos.getText()));    
+                }else{
+                    System.out.println("No habian kilos puestos");
+                    objVaca.setKilos(0);
+                }
+
+                objVaca.setPotrero(this.cmbPotrero.getSelectedItem().toString());
+
+                if (this.familia) { //Se entro por el panel de familia
+
+                    if (this.madreHijo) {//Al ser true se tomara como si se lo que se busca insertar es la madre
+
+                        FrmDiagIngresoFamilia.vacaMadre = objVaca;
+                        this.dispose();
+                        System.out.println("Insertando la madre");
+                    } else {
+                        //Se agregara una cria de la vaca madre agregada.
+                        FrmDiagIngresoFamilia.vacasHijas.add(objVaca);
+                        this.dispose();
+                        System.out.println("Insertando una cria");
+                    }
+
+                } else { //Ingreso de vaca de manera normal
+
+                    //Insertar
+                    VacaDB vacaDB = new VacaDB();
+                    vacaDB.insertar(objVaca);
+                    this.dispose();
+                    System.out.println("Insertando normal");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "El número de la vaca o el número de propietario sin llenar"
+                        + "ASEGURESE DE LLENAR ESTOS CAMPOS");
+            }
+
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed

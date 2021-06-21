@@ -266,6 +266,7 @@ public class FrmDiagActualizacionVaca extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        
         int opcion = JOptionPane.showConfirmDialog(this, "Desea actualizar?");
         if (opcion == JOptionPane.YES_OPTION) {
             
