@@ -28,6 +28,7 @@ public class FrmDiagInformacionVaca extends javax.swing.JDialog {
     }
 
     private void ponerDatosEnLosLbl() {
+        //Si no estoy mal cuando se actualizo se apuntaba hacia la misma pos de memoria entonces, se actualizaron los datos
 //        System.out.println(this.objVaca.getNumero());
         this.lblNumeroVaca.setText(Integer.toString(this.objVaca.getNumero()));
 
@@ -313,8 +314,14 @@ public class FrmDiagInformacionVaca extends javax.swing.JDialog {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
 
-        FrmDiagActualizacionVaca frmDiagActualizacionVaca = new FrmDiagActualizacionVaca(null, true, this.objVaca);
-        frmDiagActualizacionVaca.setVisible(true);
+//        FrmDiagActualizacionVaca frmDiagActualizacionVaca = new FrmDiagActualizacionVaca(null, true, this.objVaca);
+//        frmDiagActualizacionVaca.setVisible(true);
+//        ponerDatosEnLosLbl();
+        
+        
+        //Prueba de la unificación de actualización e inserción 
+        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, this.objVaca);
+        frmDiagIngresoOActualizacionVaca.setVisible(true);
         ponerDatosEnLosLbl();
     }//GEN-LAST:event_btnActualizarActionPerformed
 

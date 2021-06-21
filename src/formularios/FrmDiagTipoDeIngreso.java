@@ -153,8 +153,11 @@ public class FrmDiagTipoDeIngreso extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true);
-        frmDiagIngresoVaca.setVisible(true);
+//        FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true);
+//        frmDiagIngresoVaca.setVisible(true);
+
+        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true);
+        frmDiagIngresoOActualizacionVaca.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

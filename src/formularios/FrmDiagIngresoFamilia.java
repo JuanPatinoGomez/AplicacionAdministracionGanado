@@ -289,8 +289,14 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
 
 
     private void btnAgregarMadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMadreActionPerformed
-        FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true, true, true);
-        frmDiagIngresoVaca.setVisible(true);
+//        FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true, true, true);
+//        frmDiagIngresoVaca.setVisible(true);
+        
+//----------------------------------------
+        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, true, true);
+        frmDiagIngresoOActualizacionVaca.setVisible(true);
+//----------------------------------------        
+        
         cargarInfoMadre();
         
         this.bienMadre = true;
@@ -298,8 +304,14 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAgregarMadreActionPerformed
 
     private void btnAgregarCriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCriaActionPerformed
-        FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true, true, false);
-        frmDiagIngresoVaca.setVisible(true);
+//        FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true, true, false);
+//        frmDiagIngresoVaca.setVisible(true);
+
+//----------------------------------------
+        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, true, false);
+        frmDiagIngresoOActualizacionVaca.setVisible(true);
+//----------------------------------------
+
         cargarInfoCrias();
         
         this.bienCrias = true;
