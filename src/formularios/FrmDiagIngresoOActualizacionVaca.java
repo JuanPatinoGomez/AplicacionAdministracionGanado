@@ -369,10 +369,19 @@ public class FrmDiagIngresoOActualizacionVaca extends javax.swing.JDialog {
                 //Aqui es donde se mira si se va a actualizar o a insertar
                 if (this.modoActualizar == true && this.modoInsertar == false) {
                     
-                    int idVacaActu = this.objVacaActu.getIdvaca();//Se almacena el id de la vaca que estamos actualizando
-                    this.objVacaActu = objVaca; //Esto lo que hace es pasarle todos los datos actualizados
-                    this.objVacaActu.setIdvaca(idVacaActu); //Se le vuelve a poner el id para poder realizar la actualización
+                    //Se hizo esto para que en el panel de información se mostrar la info actualizada
                     
+                    this.objVacaActu.setNumero(objVaca.getNumero());
+                    this.objVacaActu.setFechaNacimiento(objVaca.getFechaNacimiento());
+                    this.objVacaActu.setEstado(objVaca.getEstado());
+                    this.objVacaActu.setVendido(objVaca.isVendido());
+                    this.objVacaActu.setGenero(objVaca.getGenero());
+                    this.objVacaActu.setKilos(objVaca.getKilos());
+                    this.objVacaActu.setTipoVaca(objVaca.getTipoVaca());
+                    this.objVacaActu.setPotrero(objVaca.getPotrero());
+                    this.objVacaActu.setDescripcion(objVaca.getDescripcion());
+                    this.objVacaActu.setCedula(objVaca.getCedula());
+
                     //Actualizacion
                     VacaDB vacaDB = new VacaDB();
                     vacaDB.actualizar(this.objVacaActu);
