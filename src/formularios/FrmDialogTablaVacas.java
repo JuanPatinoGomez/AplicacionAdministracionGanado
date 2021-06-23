@@ -193,7 +193,7 @@ public class FrmDialogTablaVacas extends javax.swing.JDialog {
 
 //            System.out.println("El número de la vaca traida por el metodo es:" + objVaca.getNumero()
 //                    + " \nla fecha de nacimiento es " + objVaca.getFechaNacimiento());
-            FrmDiagInformacionVaca frmDiagInformacionVaca = new FrmDiagInformacionVaca(null, true, objVaca);
+            FrmDiagInformacionVaca frmDiagInformacionVaca = new FrmDiagInformacionVaca(null, true, objVaca, 0);
             frmDiagInformacionVaca.setVisible(true);
             llenarTabla(this.opcion); // Se vuelve a cargar el panel por si se ha actualizado algo
 

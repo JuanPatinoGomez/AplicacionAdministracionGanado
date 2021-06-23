@@ -21,6 +21,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
     static ArrayList<Vaca> vacasHijas = new ArrayList<>();
     DefaultTableModel tableModel;
     
+    //Estos sirven para saber si activar el boton de guardar en la base de datos
     private boolean bienMadre;
     private boolean bienCrias;
 
@@ -60,8 +61,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
         lblNumMadre = new javax.swing.JLabel();
         btnAgregarMadre = new javax.swing.JButton();
         btnEliminarMadre = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnVisualizarMadre = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCrias = new javax.swing.JTable();
@@ -123,14 +123,12 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Visualizar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVisualizarMadre.setText("Visualizar");
+        btnVisualizarMadre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVisualizarMadreActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Editar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,10 +146,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
                                 .addComponent(jLabel2)
                                 .addGap(41, 41, 41)
                                 .addComponent(lblNumMadre))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)))
+                            .addComponent(btnVisualizarMadre))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminarMadre)
@@ -173,9 +168,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnEliminarMadre)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2)))
+                    .addComponent(btnVisualizarMadre))
                 .addGap(15, 15, 15))
         );
 
@@ -213,6 +206,11 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblCrias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCriasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCrias);
 
         btnAgregarCria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesBotones/nuevo_norm.png"))); // NOI18N
@@ -316,7 +314,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
 //        frmDiagIngresoVaca.setVisible(true);
         
 //----------------------------------------
-        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, true, true);
+        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, 1);
         frmDiagIngresoOActualizacionVaca.setVisible(true);
 //----------------------------------------        
         
@@ -331,7 +329,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
 //        frmDiagIngresoVaca.setVisible(true);
 
 //----------------------------------------
-        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, true, false);
+        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, 2);
         frmDiagIngresoOActualizacionVaca.setVisible(true);
 //----------------------------------------
 
@@ -406,9 +404,21 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarMadreActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnVisualizarMadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarMadreActionPerformed
+        FrmDiagInformacionVaca frmDiagInformacionVaca = new FrmDiagInformacionVaca(null, true, this.vacaMadre, 1);
+        frmDiagInformacionVaca.setVisible(true);
+    }//GEN-LAST:event_btnVisualizarMadreActionPerformed
+
+    private void tblCriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCriasMouseClicked
+        int col = this.tblCrias.getSelectedColumn();
+        if (col == 6) {
+            int fila = this.tblCrias.getSelectedRow();
+            //Se envia la vaca que se encuentre en la fila mirando el arraylist
+            FrmDiagInformacionVaca frmDiagInformacionVaca = new FrmDiagInformacionVaca(null, true, this.vacasHijas.get(fila), 1);
+            frmDiagInformacionVaca.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_tblCriasMouseClicked
 
     private void cargarInfoMadre() {
         if (vacaMadre.getNumero() != 0) {
@@ -505,8 +515,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminarMadre;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiarCrias;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnVisualizarMadre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

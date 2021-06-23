@@ -156,8 +156,9 @@ public class FrmDiagTipoDeIngreso extends javax.swing.JDialog {
 //        FrmDiagIngresoVaca frmDiagIngresoVaca = new FrmDiagIngresoVaca(null, true);
 //        frmDiagIngresoVaca.setVisible(true);
 
-        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true);
+        FrmDiagIngresoOActualizacionVaca frmDiagIngresoOActualizacionVaca = new FrmDiagIngresoOActualizacionVaca(null, true, 0);
         frmDiagIngresoOActualizacionVaca.setVisible(true);
+        //El valor 0 es para decirle que tipo de funcionalidad va a hacer en el panel de inserción
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

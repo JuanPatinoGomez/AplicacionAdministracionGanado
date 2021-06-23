@@ -17,29 +17,37 @@ import modelo.VacaDB;
  * @author PERSONAL
  */
 public class FrmDiagIngresoOActualizacionVaca extends javax.swing.JDialog {
-
-    private boolean familia; // Si es true significa que entro por medio del panel de familia
-    private boolean madreHijo; //Si es true significa que se va almacenar como madre, de lo contrario como cria
+    //Eliminar las 2 líneas de abajo
+//    private boolean familia; // Si es true significa que entro por medio del panel de familia
+//    private boolean madreHijo; //Si es true significa que se va almacenar como madre, de lo contrario como cria
 
     private boolean modoInsertar;
     private boolean modoActualizar;
 
+    private int opcionPanel;
+    //0 - por si proviene del flujo normal del programa -- interactuan directamente con la base de datos
+    //1 - por si es para el panel de familia (madre) / ingreso y actualización
+    //2 - por si es para el panel de familia (cria) / solo ingreso
+
     Vaca objVacaActu = null;
 
-    public FrmDiagIngresoOActualizacionVaca(java.awt.Frame parent, boolean modal) {
+    public FrmDiagIngresoOActualizacionVaca(java.awt.Frame parent, boolean modal, int opcionPanel) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        
-        this.modoActualizar = false;
-        this.modoInsertar = true;
 
         this.lblTitulo.setText("Registro");
         llenarCombobox();
+
+        this.modoActualizar = false;
+        this.modoInsertar = true;
+
+        this.opcionPanel = opcionPanel;
+
     }
 
     //Constructor creado para actualización o edición ---Si se recibe un objeto vaca es para actualizar
-    public FrmDiagIngresoOActualizacionVaca(java.awt.Frame parent, boolean modal, Vaca objVacaActu) {
+    public FrmDiagIngresoOActualizacionVaca(java.awt.Frame parent, boolean modal, Vaca objVacaActu, int opcionPanel) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -49,28 +57,28 @@ public class FrmDiagIngresoOActualizacionVaca extends javax.swing.JDialog {
 
         this.objVacaActu = objVacaActu;
 
-        cargarInfoVaca(this.objVacaActu);
-
         this.modoActualizar = true;
         this.modoInsertar = false;
+
+        cargarInfoVaca(this.objVacaActu);
+
+        this.opcionPanel = opcionPanel;
     }
 
+    //Se podría eliminar el constructos siguiente
     //Constructor creado para ingresar familias -- las familias no almacenan en la base de datos de una 
-    public FrmDiagIngresoOActualizacionVaca(java.awt.Frame parent, boolean modal, boolean familia, boolean madreHijo) {
-        super(parent, modal);
-        initComponents();
-        this.setLocationRelativeTo(null);
-        
-        this.modoActualizar = false;
-        this.modoInsertar = true;
-
-        this.familia = familia;
-        this.madreHijo = madreHijo;
-        
-        this.lblTitulo.setText("Registro");
-        llenarCombobox();
-    }
-
+//    public FrmDiagIngresoOActualizacionVaca(java.awt.Frame parent, boolean modal, boolean familia, boolean madreHijo) {
+//        super(parent, modal);
+//        initComponents();
+//        this.setLocationRelativeTo(null);
+//        
+//        this.modoActualizar = false;
+//        this.modoInsertar = true;
+//
+//        
+//        this.lblTitulo.setText("Registro");
+//        llenarCombobox();
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -364,13 +372,12 @@ public class FrmDiagIngresoOActualizacionVaca extends javax.swing.JDialog {
                 }
 
                 objVaca.setPotrero(this.cmbPotrero.getSelectedItem().toString());
+//-----------------------------------------------------------------------------------------------------------------
 
-                
                 //Aqui es donde se mira si se va a actualizar o a insertar
                 if (this.modoActualizar == true && this.modoInsertar == false) {
-                    
+
                     //Se hizo esto para que en el panel de información se mostrar la info actualizada
-                    
                     this.objVacaActu.setNumero(objVaca.getNumero());
                     this.objVacaActu.setFechaNacimiento(objVaca.getFechaNacimiento());
                     this.objVacaActu.setEstado(objVaca.getEstado());
@@ -382,35 +389,69 @@ public class FrmDiagIngresoOActualizacionVaca extends javax.swing.JDialog {
                     this.objVacaActu.setDescripcion(objVaca.getDescripcion());
                     this.objVacaActu.setCedula(objVaca.getCedula());
 
-                    //Actualizacion
-                    VacaDB vacaDB = new VacaDB();
-                    vacaDB.actualizar(this.objVacaActu);
+                    switch (this.opcionPanel) {
+                        case 1:
+                            System.out.println("Actualizar vaca madre"); //No interactuan con la base de datos
+                            break;
+                        case 2:
+                            System.out.println("Actualizar vaca cria"); //No interactuan con la base de datos
+                            break;
+                        default:
+                            //Actualizacion
+                            VacaDB vacaDB = new VacaDB();
+                            vacaDB.actualizar(this.objVacaActu);
+
+                    }
+
                     this.dispose();
-                    
+
                 } else if (this.modoInsertar == true && this.modoActualizar == false) {
 
-                    if (this.familia) { //Se entro por el panel de familia
-
-                        if (this.madreHijo) {//Al ser true se tomara como si se lo que se busca insertar es la madre
-
+                    switch (this.opcionPanel) {
+                        case 1:
+                            //Caso de la madre / No interactuan directamente con la base de datos
                             FrmDiagIngresoFamilia.vacaMadre = objVaca;
                             this.dispose();
                             System.out.println("Insertando la madre");
-                        } else {
-                            //Se agregara una cria de la vaca madre agregada.
+                            break;
+                        case 2:
+                            //Caso de la cria / No interactuan directamente con la base de datos
                             FrmDiagIngresoFamilia.vacasHijas.add(objVaca);
                             this.dispose();
                             System.out.println("Insertando una cria");
-                        }
+                            break;
+                        default:
 
-                    } else { //Ingreso de vaca de manera normal
+                            //Insertar
+                            VacaDB vacaDB = new VacaDB();
+                            vacaDB.insertar(objVaca);
+                            this.dispose();
+                            System.out.println("Insertando normal");
 
-                        //Insertar
-                        VacaDB vacaDB = new VacaDB();
-                        vacaDB.insertar(objVaca);
-                        this.dispose();
-                        System.out.println("Insertando normal");
                     }
+//PARA BORRAR
+//                    if (this.familia) { //Se entro por el panel de familia
+//
+//                        if (this.madreHijo) {//Al ser true se tomara como si se lo que se busca insertar es la madre
+//
+//                            FrmDiagIngresoFamilia.vacaMadre = objVaca;
+//                            this.dispose();
+//                            System.out.println("Insertando la madre");
+//                        } else {
+//                            //Se agregara una cria de la vaca madre agregada.
+//                            FrmDiagIngresoFamilia.vacasHijas.add(objVaca);
+//                            this.dispose();
+//                            System.out.println("Insertando una cria");
+//                        }
+//
+//                    } else { //Ingreso de vaca de manera normal
+//
+//                        //Insertar
+//                        VacaDB vacaDB = new VacaDB();
+//                        vacaDB.insertar(objVaca);
+//                        this.dispose();
+//                        System.out.println("Insertando normal");
+//                    }
                 }
 
             } else {
@@ -425,45 +466,7 @@ public class FrmDiagIngresoOActualizacionVaca extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmDiagIngresoOActualizacionVaca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmDiagIngresoOActualizacionVaca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmDiagIngresoOActualizacionVaca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmDiagIngresoOActualizacionVaca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                FrmDiagIngresoOActualizacionVaca dialog = new FrmDiagIngresoOActualizacionVaca(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
