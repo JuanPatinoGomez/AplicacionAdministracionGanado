@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+HAAAAAAAAAAAAAAAAAAAAAAAAAASTA AHORA FUNCIONA BIEN FULL PANA
  */
 package formularios;
 
@@ -38,6 +36,8 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
         
         this.btnAgregarCria.setEnabled(false); //En un inicio no se permitira agregar crias hasta que no se agrege una madre
         this.btnGuardar.setEnabled(false);
+        this.btnEliminarMadre.setEnabled(false);
+        this.btnVisualizarMadre.setEnabled(false);
     }
     
     private void activarBotonGuardar(){
@@ -95,7 +95,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
         jLabel2.setText("Número:");
 
         lblNumMadre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblNumMadre.setText("jLabel3");
+        lblNumMadre.setText("000");
 
         btnAgregarMadre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesBotones/nuevo_norm.png"))); // NOI18N
         btnAgregarMadre.setBorder(null);
@@ -123,7 +123,12 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
             }
         });
 
-        btnVisualizarMadre.setText("Visualizar");
+        btnVisualizarMadre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesBotones/ver.png"))); // NOI18N
+        btnVisualizarMadre.setBorder(null);
+        btnVisualizarMadre.setBorderPainted(false);
+        btnVisualizarMadre.setContentAreaFilled(false);
+        btnVisualizarMadre.setFocusPainted(false);
+        btnVisualizarMadre.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesBotones/ver_contra_press.png"))); // NOI18N
         btnVisualizarMadre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVisualizarMadreActionPerformed(evt);
@@ -141,12 +146,11 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 499, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(41, 41, 41)
-                                .addComponent(lblNumMadre))
-                            .addComponent(btnVisualizarMadre))
+                        .addComponent(jLabel2)
+                        .addGap(41, 41, 41)
+                        .addComponent(lblNumMadre)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnVisualizarMadre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminarMadre)
@@ -159,16 +163,17 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lblNumMadre)
-                    .addComponent(btnAgregarMadre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEliminarMadre)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lblNumMadre)
+                            .addComponent(btnAgregarMadre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnVisualizarMadre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminarMadre)
                 .addGap(15, 15, 15))
         );
 
@@ -182,7 +187,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addGap(0, 482, Short.MAX_VALUE)
         );
 
         tblCrias.setModel(new javax.swing.table.DefaultTableModel(
@@ -321,7 +326,15 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
         cargarInfoMadre();
         
         this.bienMadre = true;
+        
         activarBotonGuardar();
+        
+        //En caso de que se haya agregado habilitar y deshabilitar botones
+        if (vacaMadre.getNumero() != 0) {
+            this.btnEliminarMadre.setEnabled(true);
+            this.btnVisualizarMadre.setEnabled(true);
+            this.btnAgregarMadre.setEnabled(false);
+        }
     }//GEN-LAST:event_btnAgregarMadreActionPerformed
 
     private void btnAgregarCriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCriaActionPerformed
@@ -333,9 +346,9 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
         frmDiagIngresoOActualizacionVaca.setVisible(true);
 //----------------------------------------
 
-        cargarInfoCrias();
+//        this.bienCrias = true;
         
-        this.bienCrias = true;
+        cargarInfoCrias();
         activarBotonGuardar();
     }//GEN-LAST:event_btnAgregarCriaActionPerformed
 
@@ -399,6 +412,12 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
             this.bienMadre = false;
             
             activarBotonGuardar();
+            
+            this.btnAgregarMadre.setEnabled(true);
+            this.btnEliminarMadre.setEnabled(false);
+            this.btnVisualizarMadre.setEnabled(false);
+            
+            this.lblNumMadre.setText("000");
         }else{
             System.out.println("No eliminar madre");
         }
@@ -411,12 +430,23 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
 
     private void tblCriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCriasMouseClicked
         int col = this.tblCrias.getSelectedColumn();
-        if (col == 6) {
+        
+        if (col == 6) {//Opción ver
             int fila = this.tblCrias.getSelectedRow();
             //Se envia la vaca que se encuentre en la fila mirando el arraylist
             FrmDiagInformacionVaca frmDiagInformacionVaca = new FrmDiagInformacionVaca(null, true, this.vacasHijas.get(fila), 1);
             frmDiagInformacionVaca.setVisible(true);
             
+        }else if(col == 7){ //Opción eliminar
+            int fila = this.tblCrias.getSelectedRow();
+            
+            int option = JOptionPane.showConfirmDialog(this, "¿Desea eliminar esta cría?");
+            
+            if (option == JOptionPane.YES_OPTION) {
+                vacasHijas.remove(fila);
+                cargarInfoCrias();
+                activarBotonGuardar();
+            }
         }
     }//GEN-LAST:event_tblCriasMouseClicked
 
@@ -434,7 +464,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
     }
 
     private void configuracionTabla() {
-        String encabezado[] = {"Número", "Fecha nacimiento", "Genero", "Kilos", "Tipo de vaca", "Potrero", "Opción"};
+        String encabezado[] = {"Número", "Fecha nacimiento", "Genero", "Kilos", "Tipo de vaca", "Potrero", "Opción", "Eliminar"};
         String datos[][] = {};
 
         this.tableModel = new DefaultTableModel(datos, encabezado);
@@ -444,7 +474,7 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
     private void cargarInfoCrias() {
 
         this.tableModel.setNumRows(0); //Para que se reinicie la tabla
-        String fila[] = new String[7];
+        String fila[] = new String[8];
 
         for (Vaca objVacaCria : vacasHijas) {
 
@@ -461,11 +491,15 @@ public class FrmDiagIngresoFamilia extends javax.swing.JDialog {
             fila[4] = objVacaCria.getTipoVaca();
             fila[5] = objVacaCria.getPotrero();
             fila[6] = "Ver";
+            fila[7] = "Eliminar";
             this.tableModel.addRow(fila);
         }
 
         if (vacasHijas.size() > 0) {
-            this.btnGuardar.setEnabled(true);
+//            this.btnGuardar.setEnabled(true);
+            this.bienCrias = true;
+        }else{
+            this.bienCrias = false;
         }
 
     }
